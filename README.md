@@ -1,4 +1,4 @@
-# mcp-phpredisadmin
+# phpredisadmin-mcp
 
 通过 phpRedisAdmin 的 HTTP 页面操作 Redis 的 MCP server（stdio）。
 适用于 Redis 端口不暴露、唯一入口是 phpRedisAdmin 网页的场景。
@@ -23,10 +23,10 @@
 uv sync
 ```
 
-运行（等价入口：`uv run pra-mcp` 或 `uv run python -m pra_mcp`）：
+运行（等价入口：`uv run phpredisadmin-mcp` 或 `uv run python -m phpredisadmin_mcp`）：
 
 ```bash
-uv run pra-mcp
+uv run phpredisadmin-mcp
 ```
 
 ## 配置（opencode）
@@ -38,7 +38,7 @@ uv run pra-mcp
   "mcp": {
     "phpredisadmin": {
       "type": "local",
-      "command": ["uv", "run", "--project", "/path/to/mcp-phpredisadmin", "pra-mcp"],
+      "command": ["uv", "run", "--project", "/path/to/phpredisadmin-mcp", "phpredisadmin-mcp"],
       "environment": {
         "PRA_URL": "https://pra.example.com",
         "PRA_USER": "yourname",
@@ -105,7 +105,7 @@ redis-cli/直连不可用），server 级 `instructions` 里有完整的工作�
 ## 项目结构
 
 ```
-src/pra_mcp/
+src/phpredisadmin_mcp/
 ├── config.py       # 环境变量 → Config
 ├── registry.py     # MCPServer 实例（装配锚点）
 ├── http_client.py  # phpRedisAdmin HTTP 会话/登录/CSRF/当前 server

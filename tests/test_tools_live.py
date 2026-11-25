@@ -52,7 +52,7 @@ async def get_value(mcp_client, key: str):
 def _isolate():
     """Drop the shared client around each test so a failed server switch
     cannot leak s= state into the next case (cheap: one extra GET)."""
-    from pra_mcp.http_client import reset_client
+    from phpredisadmin_mcp.http_client import reset_client
 
     reset_client()
     yield
@@ -66,9 +66,9 @@ def _cleanup():
     Uses the plain Python tool functions (no MCP hop) since the in-memory
     client fixture is function-scoped.
     """
-    from pra_mcp.http_client import reset_client
-    from pra_mcp.tools.keys import redis_keys
-    from pra_mcp.tools.kv import redis_delete
+    from phpredisadmin_mcp.http_client import reset_client
+    from phpredisadmin_mcp.tools.keys import redis_keys
+    from phpredisadmin_mcp.tools.kv import redis_delete
 
     reset_client()
     yield
@@ -535,7 +535,7 @@ class TestExport:
         assert r.startswith("no keys found")
 
     async def test_export_cap_refuses_large_sets(self, mcp_client, monkeypatch):
-        import pra_mcp.tools.keys as keys_mod
+        import phpredisadmin_mcp.tools.keys as keys_mod
 
         monkeypatch.setattr(keys_mod, "MAX_EXPORTED_KEYS", 2)
         for n in ("c1", "c2", "c3"):

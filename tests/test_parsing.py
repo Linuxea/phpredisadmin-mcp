@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pra_mcp.parsing import (
+from phpredisadmin_mcp.parsing import (
     extract_csrf,
     extract_keys,
     find_server_select,
@@ -70,7 +70,7 @@ class TestServerSelect:
         assert find_server_select("<p>no select here</p>") is None
 
     def test_parses_options(self):
-        from pra_mcp.parsing import ServerOption
+        from phpredisadmin_mcp.parsing import ServerOption
 
         opts = parse_server_options(find_server_select(self.HTML))
         assert opts == [

@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import pytest
 
-from pra_mcp.registry import ONLY_PATH
+from phpredisadmin_mcp.registry import ONLY_PATH
 
 pytestmark = pytest.mark.anyio
 

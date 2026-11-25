@@ -6,7 +6,7 @@ MCP server (stdio) that operates Redis through a phpRedisAdmin web UI — it scr
 
 ```bash
 uv sync                                              # install (creates .venv)
-uv run pra-mcp                                       # run the server (needs PRA_URL)
+uv run phpredisadmin-mcp                                       # run the server (needs PRA_URL)
 uv run pytest                                        # offline tests only (live tests skip silently!)
 PRA_LIVE=1 PRA_URL=http://redis.chathot.me uv run pytest   # full suite incl. live
 PRA_LIVE=1 PRA_URL=... uv run pytest tests/test_tools_live.py::TestZSet -v  # one class/test
@@ -16,7 +16,7 @@ Live tests are opt-in via **two** env vars (`PRA_LIVE` + `PRA_URL`) so a product
 
 ## Architecture
 
-- `src/pra_mcp/registry.py` holds the single `MCPServer` instance; tool modules under `tools/` import `mcp` from it and decorate — **importing a tools module is what registers its tools** (wired in `tools/__init__.py` and `__init__.py`). registry.py also owns the server's *identity*: `instructions` (surfaced by opencode ≥ 1.17.10 into session context), and `identity_tool` / `ONLY_PATH` which append the "only Redis access path" jurisdiction claim to every tool docstring. Tools must use `@identity_tool`, never `@mcp.tool()` directly, and docstrings must stay plain literals — an f-string docstring leaves `__doc__` None and blanks the description (`tests/test_identity.py` pins this).
+- `src/phpredisadmin_mcp/registry.py` holds the single `MCPServer` instance; tool modules under `tools/` import `mcp` from it and decorate — **importing a tools module is what registers its tools** (wired in `tools/__init__.py` and `__init__.py`). registry.py also owns the server's *identity*: `instructions` (surfaced by opencode ≥ 1.17.10 into session context), and `identity_tool` / `ONLY_PATH` which append the "only Redis access path" jurisdiction claim to every tool docstring. Tools must use `@identity_tool`, never `@mcp.tool()` directly, and docstrings must stay plain literals — an f-string docstring leaves `__doc__` None and blanks the description (`tests/test_identity.py` pins this).
 - `http_client.py` owns the requests session, auth/CSRF, and current server/db as **instance state** (`get_client()` lazy singleton, `reset_client()` for tests). No module-level mutable globals.
 - `parsing.py` is pure functions over HTML fixture strings — extend it rather than putting regexes in tools.
 - MCP Python SDK is **v2**: `from mcp.server import MCPServer` (v1's `fastmcp.FastMCP` import is gone). In tests, `Client(mcp)` connects in memory; `list_tools()` returns a `ListToolsResult` — the tools are on `.tools`.
@@ -39,5 +39,5 @@ Live tests are opt-in via **two** env vars (`PRA_LIVE` + `PRA_URL`) so a product
 
 ## Ops notes
 
-- opencode entry: `["uv", "run", "--project", "<repo>", "pra-mcp"]` with env `PRA_URL`, `PRA_SERVER_ID`. There is no auth on the test instance; `PRA_LOGIN=form` flow exists but is untested live.
+- opencode entry: `["uv", "run", "--project", "<repo>", "phpredisadmin-mcp"]` with env `PRA_URL`, `PRA_SERVER_ID`. There is no auth on the test instance; `PRA_LOGIN=form` flow exists but is untested live.
 - README carries the user-facing tool list and known-limitation table — update it together with tool behaviour changes.

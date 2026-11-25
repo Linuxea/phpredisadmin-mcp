@@ -1,4 +1,4 @@
-"""mcp-phpredisadmin: operate Redis through a phpRedisAdmin web UI via MCP."""
+"""phpredisadmin-mcp: operate Redis through a phpRedisAdmin web UI via MCP."""
 
 from __future__ import annotations
 

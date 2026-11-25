@@ -19,7 +19,7 @@ async def mcp_client():
     """
     from mcp import Client
 
-    from pra_mcp import mcp
+    from phpredisadmin_mcp import mcp
 
     async with Client(mcp, raise_exceptions=True) as c:
         yield c

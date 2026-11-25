@@ -19,7 +19,7 @@ class PraClient:
     def __init__(self, cfg: Config):
         self.cfg = cfg
         self.session = requests.Session()
-        self.session.headers["User-Agent"] = "mcp-phpredisadmin/1.0"
+        self.session.headers["User-Agent"] = "phpredisadmin-mcp/1.0"
         self._csrf: str | None = None
         self.server_id = cfg.server_id
 
